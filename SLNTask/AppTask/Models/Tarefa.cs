@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppTask.Models;
 
 public partial class Tarefa
 {
+    [Key]
     public int Codigo { get; set; }
 
     public string Descricao { get; set; } = null!;

@@ -1,14 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 
-namespace AppTask.Models
+namespace AppTask.Models;
+
+public partial class Departamento
 {
-    [Table("Departamento")]
-    public partial class Departamento
-    {
-        [Key]
-        public int Codigo { get; set; }
-        public string Nome { get; set; }
-        public string Sigla { get; set; }
-    }
+    public int Codigo { get; set; }
+
+    public string Nome { get; set; } = null!;
+
+    public string Sigla { get; set; } = null!;
+
+    public virtual ICollection<Funcionario> Funcionarios { get; set; } = new List<Funcionario>();
 }

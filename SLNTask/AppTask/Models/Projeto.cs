@@ -1,15 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 
-namespace AppTask.Models
+namespace AppTask.Models;
+
+public partial class Projeto
 {
-    [Table("Projeto")]
-    public class Projeto
-    {
-        [Key]
-        public int Codigo { get; set; }
-        public string NomeProjeto { get; set; } = "";
-        public decimal Orcamento {  get; set; }
-        public string Status { get; set; } = "";
-    }
+    public int Codigo { get; set; }
+
+    public string NomeProjeto { get; set; } = null!;
+
+    public decimal Orcamento { get; set; }
+
+    public string Status { get; set; } = null!;
 }

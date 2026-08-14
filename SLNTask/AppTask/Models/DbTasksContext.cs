@@ -19,6 +19,8 @@ public partial class DbTasksContext : DbContext
 
     public virtual DbSet<Funcionario> Funcionarios { get; set; }
 
+    public virtual DbSet<Incidente> Incidentes { get; set; }
+
     public virtual DbSet<Projeto> Projetos { get; set; }
 
     public virtual DbSet<Tarefa> Tarefas { get; set; }
@@ -59,6 +61,24 @@ public partial class DbTasksContext : DbContext
                 .HasForeignKey(d => d.DepartamentoId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Funcionario_Departamento");
+        });
+
+        modelBuilder.Entity<Incidente>(entity =>
+        {
+            entity.HasKey(e => e.Codigo).HasName("PK__Incident__06370DAD005C9922");
+
+            entity.ToTable("Incidente");
+
+            entity.Property(e => e.DataIncidente).HasColumnType("datetime");
+            entity.Property(e => e.DescricaoProblema)
+                .HasMaxLength(250)
+                .IsUnicode(false);
+            entity.Property(e => e.Resolvido)
+                .HasMaxLength(3)
+                .IsUnicode(false);
+            entity.Property(e => e.Solucao)
+                .HasMaxLength(250)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Projeto>(entity =>
@@ -107,4 +127,3 @@ public partial class DbTasksContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
-

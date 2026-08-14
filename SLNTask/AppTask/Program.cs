@@ -1,4 +1,5 @@
 using AppTask.Models;
+using AppTask.Models.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<DbTasksContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoSqlServer")));
+
+builder.Services.AddScoped<RegraTarefa>();
 
 var app = builder.Build();
 

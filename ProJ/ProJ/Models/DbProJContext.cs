@@ -36,6 +36,10 @@ public partial class DbProJContext : DbContext
             entity.Property(e => e.Nome)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.IdGerenteNavigation).WithMany(p => p.InverseIdGerenteNavigation)
+                .HasForeignKey(d => d.IdGerente)
+                .HasConstraintName("FK__Funcionar__IdGer__34C8D9D1");
         });
 
         modelBuilder.Entity<Tarefa>(entity =>

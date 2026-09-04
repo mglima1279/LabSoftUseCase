@@ -23,7 +23,11 @@
         </div>
         <div class="field">
             <label asp-for="IdGerente">Gerente responsável</label>
-            <select asp-for="IdGerente" class="form-control" asp-items="ViewBag.IdGerente"></select>
+            <select asp-for="IdGerente" class="form-control" asp-items="ViewBag.IdGerente">
+                <option value="">
+                    -
+                </option>
+            </select>
             <span asp-validation-for="IdGerente" class="text-danger"></span>
         </div>
         <div class="mt-3">

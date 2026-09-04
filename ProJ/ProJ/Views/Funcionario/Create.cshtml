@@ -22,7 +22,11 @@
         </div>
         <div class="field">
             <label asp-for="IdGerente">Gerente responsável</label>
-            <select asp-for="IdGerente" class="form-control" asp-items="ViewBag.IdGerente"></select>
+            <select asp-for="IdGerente" class="form-control" asp-items="ViewBag.IdGerente">
+                <option value="">
+                    -
+                </option>
+            </select>
         </div>
         <div class="mt-3">
             <input type="submit" value="Criar funcionário" class="btn-ops-primary" style="border:none;cursor:pointer;" />

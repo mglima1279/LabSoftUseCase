@@ -1,0 +1,100 @@
+USE [dbProJ]
+GO
+ Object  Table [dbo].[CentralDeCusto]    Script Date 04092026 163851 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CentralDeCusto](
+	[Codigo] [int] IDENTITY(1,1) NOT NULL,
+	[NomeCentral] [varchar](250) NOT NULL,
+	[ValorMetaAnual] [decimal](18, 0) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ Object  Table [dbo].[Departamento]    Script Date 04092026 163851 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Departamento](
+	[Codigo] [int] IDENTITY(1,1) NOT NULL,
+	[Nome] [varchar](100) NOT NULL,
+	[Sigla] [varchar](10) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ Object  Table [dbo].[Funcionario]    Script Date 04092026 163851 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Funcionario](
+	[Codigo] [int] IDENTITY(1,1) NOT NULL,
+	[Nome] [varchar](100) NOT NULL,
+	[Cargo] [varchar](50) NOT NULL,
+	[IdGerente] [int] NULL,
+	[DepartamentoId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ Object  Table [dbo].[Incidente]    Script Date 04092026 163851 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Incidente](
+	[Codigo] [int] IDENTITY(1,1) NOT NULL,
+	[DescricaoProblema] [varchar](250) NOT NULL,
+	[DataIncidente] [datetime] NOT NULL,
+	[Solucao] [varchar](250) NULL,
+	[Resolvido] [varchar](3) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ Object  Table [dbo].[Tarefa]    Script Date 04092026 163851 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tarefa](
+	[Codigo] [int] IDENTITY(1,1) NOT NULL,
+	[Descricao] [varchar](200) NOT NULL,
+	[DataPlanejada] [datetime] NOT NULL,
+	[DataIniciada] [datetime] NULL,
+	[DataFinalizada] [datetime] NULL,
+	[DataCancelada] [datetime] NULL,
+	[StatusTarefa] [varchar](30) NOT NULL,
+	[Prazo] [varchar](20) NOT NULL,
+	[FuncionarioId] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[CentralDeCusto] ADD  DEFAULT ((0)) FOR [ValorMetaAnual]
+GO
+ALTER TABLE [dbo].[Funcionario]  WITH CHECK ADD FOREIGN KEY([DepartamentoId])
+REFERENCES [dbo].[Departamento] ([Codigo])
+GO
+ALTER TABLE [dbo].[Funcionario]  WITH CHECK ADD FOREIGN KEY([IdGerente])
+REFERENCES [dbo].[Funcionario] ([Codigo])
+GO
+ALTER TABLE [dbo].[Tarefa]  WITH CHECK ADD  CONSTRAINT [FK_Tarefa_Funcionario] FOREIGN KEY([FuncionarioId])
+REFERENCES [dbo].[Funcionario] ([Codigo])
+GO
+ALTER TABLE [dbo].[Tarefa] CHECK CONSTRAINT [FK_Tarefa_Funcionario]
+GO

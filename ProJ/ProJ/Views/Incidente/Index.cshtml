@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProJ.Models.Incidente>
+@{
+    ViewData["Title"] = "Incidentes";
+}
+<div class="page-head">
+    <div class="page-head-row">
+        <div>
+            <h1>Incidentes</h1>
+            <p>Registro e acompanhamento de problemas e resoluções.</p>
+        </div>
+        <a class="btn-ops-primary" asp-action="Create">Novo incidente</a>
+    </div>
+</div>
+
+<table class="table-ledger">
+    <thead>
+        <tr>
+            <th>Descrição do Problema</th>
+            <th>Data</th>
+            <th>Resolvido</th>
+            <th>Solução</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.DescricaoProblema)</td>
+                <td>@item.DataIncidente.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    @if (item.Resolvido == "S" || item.Resolvido == "Sim" || item.Resolvido == "1")
+                    {
+                        <span style="color:#2e7d32;font-weight:600;">Sim</span>
+                    }
+                    else
+                    {
+                        <span style="color:#c62828;font-weight:600;">Não</span>
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Solucao))
+                    {
+                        @Html.DisplayFor(modelItem => item.Solucao)
+                    }
+                    else
+                    {
+                        <span style="color:var(--steel-light)">— em aberto</span>
+                    }
+                </td>
+                <td class="row-actions text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Details" asp-route-id="@item.Codigo">Detalhes</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

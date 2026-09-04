@@ -9,23 +9,22 @@ using ProJ.Models;
 
 namespace ProJ.Controllers
 {
-    public class TarefaController : Controller
+    public class DepartamentoController : Controller
     {
         private readonly DbProJContext _context;
 
-        public TarefaController(DbProJContext context)
+        public DepartamentoController(DbProJContext context)
         {
             _context = context;
         }
 
-        // GET: Tarefa
+        // GET: Departamento
         public async Task<IActionResult> Index()
         {
-            var dbProJContext = _context.Tarefas.Include(t => t.Funcionario);
-            return View(await dbProJContext.ToListAsync());
+            return View(await _context.Departamentos.ToListAsync());
         }
 
-        // GET: Tarefa/Details/5
+        // GET: Departamento/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +32,39 @@ namespace ProJ.Controllers
                 return NotFound();
             }
 
-            var tarefa = await _context.Tarefas
-                .Include(t => t.Funcionario)
+            var departamento = await _context.Departamentos
                 .FirstOrDefaultAsync(m => m.Codigo == id);
-            if (tarefa == null)
+            if (departamento == null)
             {
                 return NotFound();
             }
 
-            return View(tarefa);
+            return View(departamento);
         }
 
-        // GET: Tarefa/Create
+        // GET: Departamento/Create
         public IActionResult Create()
         {
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo");
             return View();
         }
 
-        // POST: Tarefa/Create
+        // POST: Departamento/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Codigo,Descricao,DataPlanejada,DataIniciada,DataFinalizada,DataCancelada,StatusTarefa,Prazo,FuncionarioId")] Tarefa tarefa)
+        public async Task<IActionResult> Create([Bind("Codigo,Nome,Sigla")] Departamento departamento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tarefa);
+                _context.Add(departamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo", tarefa.FuncionarioId);
-            return View(tarefa);
+            return View(departamento);
         }
 
-        // GET: Tarefa/Edit/5
+        // GET: Departamento/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +72,22 @@ namespace ProJ.Controllers
                 return NotFound();
             }
 
-            var tarefa = await _context.Tarefas.FindAsync(id);
-            if (tarefa == null)
+            var departamento = await _context.Departamentos.FindAsync(id);
+            if (departamento == null)
             {
                 return NotFound();
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo", tarefa.FuncionarioId);
-            return View(tarefa);
+            return View(departamento);
         }
 
-        // POST: Tarefa/Edit/5
+        // POST: Departamento/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Codigo,Descricao,DataPlanejada,DataIniciada,DataFinalizada,DataCancelada,StatusTarefa,Prazo,FuncionarioId")] Tarefa tarefa)
+        public async Task<IActionResult> Edit(int id, [Bind("Codigo,Nome,Sigla")] Departamento departamento)
         {
-            if (id != tarefa.Codigo)
+            if (id != departamento.Codigo)
             {
                 return NotFound();
             }
@@ -101,12 +96,12 @@ namespace ProJ.Controllers
             {
                 try
                 {
-                    _context.Update(tarefa);
+                    _context.Update(departamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TarefaExists(tarefa.Codigo))
+                    if (!DepartamentoExists(departamento.Codigo))
                     {
                         return NotFound();
                     }
@@ -117,11 +112,10 @@ namespace ProJ.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo", tarefa.FuncionarioId);
-            return View(tarefa);
+            return View(departamento);
         }
 
-        // GET: Tarefa/Delete/5
+        // GET: Departamento/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,35 +123,34 @@ namespace ProJ.Controllers
                 return NotFound();
             }
 
-            var tarefa = await _context.Tarefas
-                .Include(t => t.Funcionario)
+            var departamento = await _context.Departamentos
                 .FirstOrDefaultAsync(m => m.Codigo == id);
-            if (tarefa == null)
+            if (departamento == null)
             {
                 return NotFound();
             }
 
-            return View(tarefa);
+            return View(departamento);
         }
 
-        // POST: Tarefa/Delete/5
+        // POST: Departamento/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tarefa = await _context.Tarefas.FindAsync(id);
-            if (tarefa != null)
+            var departamento = await _context.Departamentos.FindAsync(id);
+            if (departamento != null)
             {
-                _context.Tarefas.Remove(tarefa);
+                _context.Departamentos.Remove(departamento);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TarefaExists(int id)
+        private bool DepartamentoExists(int id)
         {
-            return _context.Tarefas.Any(e => e.Codigo == id);
+            return _context.Departamentos.Any(e => e.Codigo == id);
         }
     }
 }

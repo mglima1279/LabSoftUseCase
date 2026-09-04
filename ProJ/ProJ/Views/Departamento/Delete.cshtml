@@ -1,0 +1,27 @@
+﻿@model ProJ.Models.Departamento
+@{
+    ViewData["Title"] = "Excluir departamento";
+}
+<div class="page-head">
+    <h1>Excluir departamento</h1>
+</div>
+
+<div class="confirm-banner">
+    Confirme abaixo a exclusão deste registro. Essa ação não pode ser desfeita.
+</div>
+
+<div class="panel-quiet" style="max-width:560px;">
+    <dl class="record row">
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nome)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Nome)</dd>
+
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Sigla)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Sigla)</dd>
+    </dl>
+
+    <form asp-action="Delete" class="mt-2">
+        <input type="hidden" asp-for="Codigo" />
+        <input type="submit" value="Excluir" class="btn-ops-danger" style="border:none;cursor:pointer;" />
+        <a class="btn-ops-link ms-3" asp-action="Index">Voltar à lista</a>
+    </form>
+</div>

@@ -1,0 +1,37 @@
+﻿@model ProJ.Models.CentralDeCusto
+@{
+    ViewData["Title"] = "Editar central de custo";
+}
+<div class="page-head">
+    <h1>Editar central de custo</h1>
+    <p>Atualize as informações de @Model.NomeCentral.</p>
+</div>
+
+<div class="panel" style="max-width:520px;">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+        <input type="hidden" asp-for="Codigo" />
+        <div class="field">
+            <label asp-for="NomeCentral">Nome da Central</label>
+            <input asp-for="NomeCentral" class="form-control" />
+            <span asp-validation-for="NomeCentral" class="text-danger"></span>
+        </div>
+        <div class="field">
+            <label asp-for="ValorMetaAnual">Meta Anual</label>
+            <input asp-for="ValorMetaAnual" class="form-control" type="number" step="0.01" />
+            <span asp-validation-for="ValorMetaAnual" class="text-danger"></span>
+        </div>
+        <div class="mt-3">
+            <input type="submit" value="Salvar alterações" class="btn-ops-primary" style="border:none;cursor:pointer;" />
+        </div>
+    </form>
+</div>
+<div class="mt-3">
+    <a class="btn-ops-link" asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

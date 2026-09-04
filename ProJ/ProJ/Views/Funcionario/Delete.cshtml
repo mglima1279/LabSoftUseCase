@@ -1,4 +1,4 @@
-@model ProJ.Models.Funcionario
+﻿@model ProJ.Models.Funcionario
 @{
     ViewData["Title"] = "Excluir funcionário";
 }
@@ -12,14 +12,26 @@
 
 <div class="panel-quiet" style="max-width:560px;">
     <dl class="record row">
-        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Nome)</dt>
-        <dd class="col-sm-9">@Html.DisplayFor(model => model.Nome)</dd>
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nome)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Nome)</dd>
 
-        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Cargo)</dt>
-        <dd class="col-sm-9">@Html.DisplayFor(model => model.Cargo)</dd>
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Cargo)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Cargo)</dd>
 
-        <dt class="col-sm-3">Gerente</dt>
-        <dd class="col-sm-9">
+        <dt class="col-sm-4">Departamento</dt>
+        <dd class="col-sm-8">
+            @if (Model.Departamento != null)
+            {
+                @Html.DisplayFor(model => model.Departamento.Nome)
+            }
+            else
+            {
+                <span style="color:var(--steel-light)">—</span>
+            }
+        </dd>
+
+        <dt class="col-sm-4">Gerente</dt>
+        <dd class="col-sm-8">
             @if (Model.IdGerenteNavigation != null)
             {
                 @Html.DisplayFor(model => model.IdGerenteNavigation.Nome)

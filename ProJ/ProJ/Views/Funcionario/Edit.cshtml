@@ -1,4 +1,4 @@
-@model ProJ.Models.Funcionario
+﻿@model ProJ.Models.Funcionario
 @{
     ViewData["Title"] = "Editar funcionário";
 }
@@ -22,11 +22,16 @@
             <span asp-validation-for="Cargo" class="text-danger"></span>
         </div>
         <div class="field">
+            <label asp-for="DepartamentoId">Departamento</label>
+            <select asp-for="DepartamentoId" class="form-control" asp-items="ViewBag.DepartamentoId">
+                <option value="">-- Selecione o departamento --</option>
+            </select>
+            <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+        </div>
+        <div class="field">
             <label asp-for="IdGerente">Gerente responsável</label>
             <select asp-for="IdGerente" class="form-control" asp-items="ViewBag.IdGerente">
-                <option value="">
-                    -
-                </option>
+                <option value="">-- Sem gerente --</option>
             </select>
             <span asp-validation-for="IdGerente" class="text-danger"></span>
         </div>
@@ -38,6 +43,9 @@
 <div class="mt-3">
     <a class="btn-ops-link" asp-action="Index">Voltar à lista</a>
 </div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

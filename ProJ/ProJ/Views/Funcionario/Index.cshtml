@@ -1,4 +1,4 @@
-@model IEnumerable<ProJ.Models.Funcionario>
+﻿@model IEnumerable<ProJ.Models.Funcionario>
 @{
     ViewData["Title"] = "Funcionários";
 }
@@ -6,7 +6,7 @@
     <div class="page-head-row">
         <div>
             <h1>Funcionários</h1>
-            <p>Quadro de colaboradores e hierarquia de gestão.</p>
+            <p>Quadro de colaboradores, departamentos e hierarquia de gestão.</p>
         </div>
         <a class="btn-ops-primary" asp-action="Create">Novo funcionário</a>
     </div>
@@ -17,38 +17,50 @@
         <tr>
             <th>@Html.DisplayNameFor(model => model.Nome)</th>
             <th>@Html.DisplayNameFor(model => model.Cargo)</th>
+            <th>Departamento</th>
             <th>Gerente</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <div class="person-cell">
-                    <span class="id-tag">@(item.Nome?.Substring(0, 1).ToUpper())</span>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </div>
-            </td>
-            <td>@Html.DisplayFor(modelItem => item.Cargo)</td>
-            <td>
-                @if (item.IdGerenteNavigation != null)
-                {
-                    @Html.DisplayFor(modelItem => item.IdGerenteNavigation.Nome)
-                }
-                else
-                {
-                    <span style="color:var(--steel-light)">— sem gerente</span>
-                }
-            </td>
-            <td class="row-actions text-end">
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a>
-                <span class="sep">|</span>
-                <a asp-action="Details" asp-route-id="@item.Codigo">Detalhes</a>
-                <span class="sep">|</span>
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Excluir</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="person-cell">
+                        <span class="id-tag">@(item.Nome?.Substring(0, 1).ToUpper())</span>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </div>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Cargo)</td>
+                <td>
+                    @if (item.Departamento != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.Departamento.Nome)
+                    }
+                    else
+                    {
+                        <span style="color:var(--steel-light)">— sem departamento</span>
+                    }
+                </td>
+                <td>
+                    @if (item.IdGerenteNavigation != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.IdGerenteNavigation.Nome)
+                    }
+                    else
+                    {
+                        <span style="color:var(--steel-light)">— sem gerente</span>
+                    }
+                </td>
+                <td class="row-actions text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Details" asp-route-id="@item.Codigo">Detalhes</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">Excluir</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

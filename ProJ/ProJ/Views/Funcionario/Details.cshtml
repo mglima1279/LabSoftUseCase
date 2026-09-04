@@ -1,4 +1,4 @@
-@model ProJ.Models.Funcionario
+﻿@model ProJ.Models.Funcionario
 @{
     ViewData["Title"] = "Detalhes do funcionário";
 }
@@ -16,8 +16,20 @@
     </div>
 
     <dl class="record row">
-        <dt class="col-sm-3">Gerente</dt>
-        <dd class="col-sm-9">
+        <dt class="col-sm-4">Departamento</dt>
+        <dd class="col-sm-8">
+            @if (Model.Departamento != null)
+            {
+                @Html.DisplayFor(model => model.Departamento.Nome)
+            }
+            else
+            {
+                <span style="color:var(--steel-light)">Sem departamento cadastrado</span>
+            }
+        </dd>
+
+        <dt class="col-sm-4">Gerente</dt>
+        <dd class="col-sm-8">
             @if (Model.IdGerenteNavigation != null)
             {
                 @Html.DisplayFor(model => model.IdGerenteNavigation.Nome)

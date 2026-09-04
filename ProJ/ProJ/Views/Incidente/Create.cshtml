@@ -1,0 +1,54 @@
+﻿@model ProJ.Models.Incidente
+@{
+    ViewData["Title"] = "Novo incidente";
+}
+<div class="page-head">
+    <h1>Novo incidente</h1>
+    <p>Cadastre uma ocorrência ou problema no sistema.</p>
+</div>
+
+<div class="panel" style="max-width:520px;">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <div class="field">
+            <label asp-for="DescricaoProblema">Descrição do Problema</label>
+            <textarea asp-for="DescricaoProblema" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="DescricaoProblema" class="text-danger"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="DataIncidente">Data do Incidente</label>
+            <input asp-for="DataIncidente" type="datetime-local" class="form-control" />
+            <span asp-validation-for="DataIncidente" class="text-danger"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Resolvido">Resolvido?</label>
+            <select asp-for="Resolvido" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+            <span asp-validation-for="Resolvido" class="text-danger"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Solucao">Solução (opcional)</label>
+            <textarea asp-for="Solucao" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Solucao" class="text-danger"></span>
+        </div>
+
+        <div class="mt-3">
+            <input type="submit" value="Criar incidente" class="btn-ops-primary" style="border:none;cursor:pointer;" />
+        </div>
+    </form>
+</div>
+<div class="mt-3">
+    <a class="btn-ops-link" asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,32 @@
+﻿@model ProJ.Models.Incidente
+@{
+    ViewData["Title"] = "Excluir incidente";
+}
+<div class="page-head">
+    <h1>Excluir incidente</h1>
+</div>
+
+<div class="confirm-banner">
+    Confirme abaixo a exclusão deste registro. Essa ação não pode ser desfeita.
+</div>
+
+<div class="panel-quiet" style="max-width:560px;">
+    <dl class="record row">
+        <dt class="col-sm-4">Descrição</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.DescricaoProblema)</dd>
+
+        <dt class="col-sm-4">Data</dt>
+        <dd class="col-sm-8">@Model.DataIncidente.ToString("dd/MM/yyyy HH:mm")</dd>
+
+        <dt class="col-sm-4">Resolvido</dt>
+        <dd class="col-sm-8">
+            @(Model.Resolvido == "S" || Model.Resolvido == "Sim" || Model.Resolvido == "1" ? "Sim" : "Não")
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" class="mt-2">
+        <input type="hidden" asp-for="Codigo" />
+        <input type="submit" value="Excluir" class="btn-ops-danger" style="border:none;cursor:pointer;" />
+        <a class="btn-ops-link ms-3" asp-action="Index">Voltar à lista</a>
+    </form>
+</div>

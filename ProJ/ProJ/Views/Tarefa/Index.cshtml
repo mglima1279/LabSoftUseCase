@@ -29,13 +29,13 @@
                 <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
                 <td>@Html.DisplayFor(modelItem => item.StatusTarefa)</td>
                 <td>
-                    @if (item.Prazo != null)
+                    @if (!string.IsNullOrEmpty(item.Prazo))
                     {
                         @Html.DisplayFor(modelItem => item.Prazo)
                     }
                     else
                     {
-                        <span>—</span>
+                        <span style="color:var(--steel-light)">—</span>
                     }
                 </td>
                 <td>

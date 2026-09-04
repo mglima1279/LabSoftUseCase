@@ -1,0 +1,37 @@
+﻿@model ProJ.Models.Departamento
+@{
+    ViewData["Title"] = "Editar departamento";
+}
+<div class="page-head">
+    <h1>Editar departamento</h1>
+    <p>Atualize as informações de @Model.Nome.</p>
+</div>
+
+<div class="panel" style="max-width:520px;">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+        <input type="hidden" asp-for="Codigo" />
+        <div class="field">
+            <label asp-for="Nome">Nome do Departamento</label>
+            <input asp-for="Nome" class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="field">
+            <label asp-for="Sigla">Sigla</label>
+            <input asp-for="Sigla" class="form-control" style="text-transform:uppercase;" />
+            <span asp-validation-for="Sigla" class="text-danger"></span>
+        </div>
+        <div class="mt-3">
+            <input type="submit" value="Salvar alterações" class="btn-ops-primary" style="border:none;cursor:pointer;" />
+        </div>
+    </form>
+</div>
+<div class="mt-3">
+    <a class="btn-ops-link" asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

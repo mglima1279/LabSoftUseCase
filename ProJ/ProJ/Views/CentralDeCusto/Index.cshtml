@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ProJ.Models.CentralDeCusto>
+@{
+    ViewData["Title"] = "Centrais de Custo";
+}
+<div class="page-head">
+    <div class="page-head-row">
+        <div>
+            <h1>Centrais de Custo</h1>
+            <p>Gerenciamento e acompanhamento dos centros de custo.</p>
+        </div>
+        <a class="btn-ops-primary" asp-action="Create">Nova central de custo</a>
+    </div>
+</div>
+
+<table class="table-ledger">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NomeCentral)</th>
+            <th>@Html.DisplayNameFor(model => model.ValorMetaAnual)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.NomeCentral)</td>
+                <td>
+                    @if (item.ValorMetaAnual.HasValue)
+                    {
+                        @item.ValorMetaAnual.Value.ToString("C")
+                    }
+                    else
+                    {
+                        <span style="color:var(--steel-light)">— não definido</span>
+                    }
+                </td>
+                <td class="row-actions text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Details" asp-route-id="@item.Codigo">Detalhes</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -21,7 +21,7 @@ namespace ProJ.Controllers
         // GET: Funcionario
         public async Task<IActionResult> Index()
         {
-            var dbProJContext = _context.Funcionarios.Include(f => f.IdGerenteNavigation);
+            var dbProJContext = _context.Funcionarios.Include(f => f.Departamento).Include(f => f.IdGerenteNavigation);
             return View(await dbProJContext.ToListAsync());
         }
 
@@ -34,6 +34,7 @@ namespace ProJ.Controllers
             }
 
             var funcionario = await _context.Funcionarios
+                .Include(f => f.Departamento)
                 .Include(f => f.IdGerenteNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (funcionario == null)
@@ -47,7 +48,8 @@ namespace ProJ.Controllers
         // GET: Funcionario/Create
         public IActionResult Create()
         {
-            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Nome");
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Codigo");
+            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo");
             return View();
         }
 
@@ -56,7 +58,7 @@ namespace ProJ.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Codigo,Nome,Cargo,IdGerente")] Funcionario funcionario)
+        public async Task<IActionResult> Create([Bind("Codigo,Nome,Cargo,IdGerente,DepartamentoId")] Funcionario funcionario)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +66,7 @@ namespace ProJ.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Codigo", funcionario.DepartamentoId);
             ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo", funcionario.IdGerente);
             return View(funcionario);
         }
@@ -81,7 +84,8 @@ namespace ProJ.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Nome", funcionario.IdGerente);
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Codigo", funcionario.DepartamentoId);
+            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo", funcionario.IdGerente);
             return View(funcionario);
         }
 
@@ -90,7 +94,7 @@ namespace ProJ.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Codigo,Nome,Cargo,IdGerente")] Funcionario funcionario)
+        public async Task<IActionResult> Edit(int id, [Bind("Codigo,Nome,Cargo,IdGerente,DepartamentoId")] Funcionario funcionario)
         {
             if (id != funcionario.Codigo)
             {
@@ -117,6 +121,7 @@ namespace ProJ.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Codigo", funcionario.DepartamentoId);
             ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo", funcionario.IdGerente);
             return View(funcionario);
         }
@@ -130,6 +135,7 @@ namespace ProJ.Controllers
             }
 
             var funcionario = await _context.Funcionarios
+                .Include(f => f.Departamento)
                 .Include(f => f.IdGerenteNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (funcionario == null)

@@ -36,6 +36,15 @@
                         <li class="nav-item">
                             <a class="nav-tab @(currentController == "Funcionario" ? "active" : "")" asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-tab @(currentController == "Departamento" ? "active" : "")" asp-area="" asp-controller="Departamento" asp-action="Index">Departamentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-tab @(currentController == "CentralDeCusto" ? "active" : "")" asp-area="" asp-controller="CentralDeCusto" asp-action="Index">Centrais de Custo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-tab @(currentController == "Incidente" ? "active" : "")" asp-area="" asp-controller="Incidente" asp-action="Index">Incidentes</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -47,7 +56,7 @@
         </main>
     </div>
     <footer class="app-footer">
-        ProJ &middot; painel interno de tarefas e equipe
+        ProJ &middot; painel interno de tarefas e gestão
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

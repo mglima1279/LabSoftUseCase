@@ -4,8 +4,8 @@
 
 <div class="board">
     <div class="live"><span class="pulse"></span> em operação</div>
-    <div class="readout">67</div>
-    <div class="caption">Moranguete abacatudo</div>
+    <div class="readout">ProJ</div>
+    <div class="caption">Painel de Controle Operacional</div>
 </div>
 
 <div class="tiles">
@@ -13,8 +13,24 @@
         <div class="tile-title">Tarefas</div>
         <div class="tile-desc">Acompanhe prazos, andamento e status de cada tarefa.</div>
     </a>
+
     <a class="tile" asp-controller="Funcionario" asp-action="Index">
         <div class="tile-title">Funcionários</div>
         <div class="tile-desc">Consulte o quadro de colaboradores e a hierarquia de gestão.</div>
+    </a>
+
+    <a class="tile" asp-controller="Departamento" asp-action="Index">
+        <div class="tile-title">Departamentos</div>
+        <div class="tile-desc">Gerencie os setores, siglas e divisões da empresa.</div>
+    </a>
+
+    <a class="tile" asp-controller="CentralDeCusto" asp-action="Index">
+        <div class="tile-title">Centrais de Custo</div>
+        <div class="tile-desc">Monitore os centros de custo e o cumprimento de metas anuais.</div>
+    </a>
+
+    <a class="tile" asp-controller="Incidente" asp-action="Index">
+        <div class="tile-title">Incidentes</div>
+        <div class="tile-desc">Registre ocorrências, acompanhe resoluções e histórico de problemas.</div>
     </a>
 </div>

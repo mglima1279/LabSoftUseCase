@@ -13,6 +13,10 @@ public partial class Funcionario
 
     public int? IdGerente { get; set; }
 
+    public int? DepartamentoId { get; set; }
+
+    public virtual Departamento? Departamento { get; set; }
+
     public virtual Funcionario? IdGerenteNavigation { get; set; }
 
     public virtual ICollection<Funcionario> InverseIdGerenteNavigation { get; set; } = new List<Funcionario>();

@@ -1,10 +1,10 @@
-@model ProJ.Models.Funcionario
+﻿@model ProJ.Models.Funcionario
 @{
     ViewData["Title"] = "Novo funcionário";
 }
 <div class="page-head">
     <h1>Novo funcionário</h1>
-    <p>Cadastre um colaborador e, se houver, o gerente responsável por ele.</p>
+    <p>Cadastre um colaborador, vinculando seu departamento e gerente responsável.</p>
 </div>
 
 <div class="panel" style="max-width:520px;">
@@ -21,12 +21,18 @@
             <span asp-validation-for="Cargo" class="text-danger"></span>
         </div>
         <div class="field">
+            <label asp-for="DepartamentoId">Departamento</label>
+            <select asp-for="DepartamentoId" class="form-control" asp-items="ViewBag.DepartamentoId">
+                <option value="">-- Selecione o departamento --</option>
+            </select>
+            <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+        </div>
+        <div class="field">
             <label asp-for="IdGerente">Gerente responsável</label>
             <select asp-for="IdGerente" class="form-control" asp-items="ViewBag.IdGerente">
-                <option value="">
-                    -
-                </option>
+                <option value="">-- Sem gerente --</option>
             </select>
+            <span asp-validation-for="IdGerente" class="text-danger"></span>
         </div>
         <div class="mt-3">
             <input type="submit" value="Criar funcionário" class="btn-ops-primary" style="border:none;cursor:pointer;" />
@@ -36,6 +42,9 @@
 <div class="mt-3">
     <a class="btn-ops-link" asp-action="Index">Voltar à lista</a>
 </div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

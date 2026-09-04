@@ -36,6 +36,24 @@
         </div>
 
         <div class="field">
+            <label asp-for="DataIniciada">Data de Início</label>
+            <input asp-for="DataIniciada" type="date" class="form-control" />
+            <span asp-validation-for="DataIniciada" class="text-danger"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="DataFinalizada">Data de Finalização</label>
+            <input asp-for="DataFinalizada" type="date" class="form-control" />
+            <span asp-validation-for="DataFinalizada" class="text-danger"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="DataCancelada">Data de Cancelamento</label>
+            <input asp-for="DataCancelada" type="date" class="form-control" />
+            <span asp-validation-for="DataCancelada" class="text-danger"></span>
+        </div>
+
+        <div class="field">
             <label asp-for="FuncionarioId">Responsável</label>
             <select asp-for="FuncionarioId" class="form-control" asp-items="ViewBag.FuncionarioId"></select>
             <span asp-validation-for="FuncionarioId" class="text-danger"></span>

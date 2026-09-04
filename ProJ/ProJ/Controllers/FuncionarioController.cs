@@ -48,8 +48,8 @@ namespace ProJ.Controllers
         // GET: Funcionario/Create
         public IActionResult Create()
         {
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Codigo");
-            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo");
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Nome");
+            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Nome");
             return View();
         }
 
@@ -84,8 +84,8 @@ namespace ProJ.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Codigo", funcionario.DepartamentoId);
-            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Codigo", funcionario.IdGerente);
+            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Codigo", "Nome", funcionario.DepartamentoId);
+            ViewData["IdGerente"] = new SelectList(_context.Funcionarios, "Codigo", "Nome", funcionario.IdGerente);
             return View(funcionario);
         }
 

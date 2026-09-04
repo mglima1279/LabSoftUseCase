@@ -1,77 +1,64 @@
 ﻿@model IEnumerable<ProJ.Models.Tarefa>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tarefas";
 }
+<div class="page-head">
+    <div class="page-head-row">
+        <div>
+            <h1>Tarefas</h1>
+            <p>Gerenciamento e acompanhamento das atividades da equipe.</p>
+        </div>
+        <a class="btn-ops-primary" asp-action="Create">Nova tarefa</a>
+    </div>
+</div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table-ledger">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataPlanejada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataIniciada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataFinalizada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataCancelada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusTarefa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prazo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Funcionario)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Descricao)</th>
+            <th>@Html.DisplayNameFor(model => model.StatusTarefa)</th>
+            <th>@Html.DisplayNameFor(model => model.Prazo)</th>
+            <th>Responsável</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataPlanejada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataIniciada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFinalizada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataCancelada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusTarefa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prazo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Funcionario.Codigo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+                <td>@Html.DisplayFor(modelItem => item.StatusTarefa)</td>
+                <td>
+                    @if (item.Prazo != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.Prazo)
+                    }
+                    else
+                    {
+                        <span>—</span>
+                    }
+                </td>
+                <td>
+                    @if (item.Funcionario != null)
+                    {
+                        <div class="person-cell">
+                            <span class="id-tag">@(item.Funcionario.Nome?.Substring(0, 1).ToUpper())</span>
+                            @Html.DisplayFor(modelItem => item.Funcionario.Nome)
+                        </div>
+                    }
+                    else
+                    {
+                        <span style="color:var(--steel-light)">— sem responsável</span>
+                    }
+                </td>
+                <td class="row-actions text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Details" asp-route-id="@item.Codigo">Detalhes</a>
+                    <span class="sep">|</span>
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">Excluir</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

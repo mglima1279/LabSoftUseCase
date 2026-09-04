@@ -1,29 +1,23 @@
-﻿@model IEnumerable<ProJ.Models.Funcionario>
-
+@model IEnumerable<ProJ.Models.Funcionario>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Funcionários";
 }
+<div class="page-head">
+    <div class="page-head-row">
+        <div>
+            <h1>Funcionários</h1>
+            <p>Quadro de colaboradores e hierarquia de gestão.</p>
+        </div>
+        <a class="btn-ops-primary" asp-action="Create">Novo funcionário</a>
+    </div>
+</div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table-ledger">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cargo)
-            </th>
-            <th>
-                IdGerente
-            </th>
-            <th>
-                Nome Gerente
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Cargo)</th>
+            <th>Gerente</th>
             <th></th>
         </tr>
     </thead>
@@ -31,21 +25,28 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nome)
+                <div class="person-cell">
+                    <span class="id-tag">@(item.Nome?.Substring(0, 1).ToUpper())</span>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </div>
             </td>
+            <td>@Html.DisplayFor(modelItem => item.Cargo)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cargo)
+                @if (item.IdGerenteNavigation != null)
+                {
+                    @Html.DisplayFor(modelItem => item.IdGerenteNavigation.Nome)
+                }
+                else
+                {
+                    <span style="color:var(--steel-light)">— sem gerente</span>
+                }
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdGerenteNavigation.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdGerenteNavigation.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+            <td class="row-actions text-end">
+                <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a>
+                <span class="sep">|</span>
+                <a asp-action="Details" asp-route-id="@item.Codigo">Detalhes</a>
+                <span class="sep">|</span>
+                <a asp-action="Delete" asp-route-id="@item.Codigo">Excluir</a>
             </td>
         </tr>
 }

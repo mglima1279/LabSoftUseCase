@@ -1,22 +1,571 @@
-html {
-  font-size: 14px;
+/* ==========================================================================
+   ProJ — Painel de Operações
+   Direção: quadro de despacho de tarefas e equipe. Navy operacional + âmbar
+   de sinalização, tipografia técnica (Space Grotesk / IBM Plex Sans),
+   status como luz-piloto (ponto colorido), painéis com régua de destaque
+   em vez de sombra genérica.
+   ========================================================================== */
+
+:root {
+    --ink: #101B33;
+    --ink-soft: #1B2A4D;
+    --steel: #3A4A63;
+    --steel-light: #8592A6;
+    --paper: #EAEEF3;
+    --panel: #FFFFFF;
+    --line: #D7DCE3;
+    --amber: #E8A33D;
+    --amber-dark: #C6822A;
+    --green: #2F8F5B;
+    --red: #C0392B;
+    --slate-signal: #7C8CA6;
+    --radius-btn: 8px;
+    --radius-field: 6px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+* {
+    box-sizing: border-box;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+html, body {
+    height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+h1, h2, h3, h4, .display-font {
+    font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+}
+
+a {
+    color: var(--ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+}
+
+.app-shell {
+    max-width: 1080px;
+}
+
+/* ---------- Navbar ---------- */
+.navbar-ops {
+    background: var(--ink);
+    padding: 0.85rem 0;
+}
+
+    .navbar-ops .navbar-brand {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        letter-spacing: -0.01em;
+    }
+
+    .navbar-ops .brand-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--amber);
+        display: inline-block;
+    }
+
+    .navbar-ops .nav-tab {
+        color: rgba(255, 255, 255, 0.68);
+        font-weight: 500;
+        padding: 0.4rem 0.1rem;
+        margin-right: 1.75rem;
+        border-bottom: 3px solid transparent;
+        transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+        .navbar-ops .nav-tab:hover {
+            color: #fff;
+        }
+
+        .navbar-ops .nav-tab.active {
+            color: #fff;
+            border-bottom-color: var(--amber);
+        }
+
+/* ---------- Page header ---------- */
+.page-head {
+    border-top: 3px solid var(--ink);
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.page-head-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.page-head h1 {
+    font-size: 1.65rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+}
+
+.page-head p {
+    color: var(--steel);
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn-ops-primary {
+    background: var(--ink);
+    color: #fff;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-btn);
+    font-weight: 600;
+    padding: 0.55rem 1.25rem;
+    display: inline-block;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+    .btn-ops-primary:hover {
+        background: var(--ink-soft);
+        color: #fff;
+    }
+
+.btn-ops-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-btn);
+    font-weight: 600;
+    padding: 0.55rem 1.25rem;
+    display: inline-block;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+}
+
+    .btn-ops-outline:hover {
+        border-color: var(--ink);
+        color: var(--ink);
+    }
+
+.btn-ops-danger {
+    background: var(--red);
+    color: #fff;
+    border: 1px solid var(--red);
+    border-radius: var(--radius-btn);
+    font-weight: 600;
+    padding: 0.55rem 1.25rem;
+    display: inline-block;
+}
+
+    .btn-ops-danger:hover {
+        background: #a53023;
+        color: #fff;
+    }
+
+.btn-ops-link {
+    color: var(--steel);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+    .btn-ops-link:hover {
+        color: var(--ink);
+        border-bottom-color: var(--ink);
+    }
+
+/* ---------- Panels ---------- */
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--ink);
+    padding: 1.75rem;
+    border-radius: 4px;
+}
+
+.panel-quiet {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+
+/* ---------- Ledger table ---------- */
+.table-ledger {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table-ledger thead th {
+        border-bottom: 2px solid var(--ink);
+        color: var(--steel);
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-align: left;
+        padding: 0.6rem 0.75rem;
+        white-space: nowrap;
+    }
+
+    .table-ledger tbody td {
+        border-bottom: 1px solid var(--line);
+        padding: 0.85rem 0.75rem;
+        vertical-align: middle;
+    }
+
+    .table-ledger tbody tr:hover {
+        background: #E3E8EE;
+    }
+
+    .table-ledger tbody tr:last-child td {
+        border-bottom: 2px solid var(--ink);
+    }
+
+.row-actions a {
+    color: var(--steel);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+    .row-actions a:hover {
+        color: var(--ink);
+        text-decoration: underline;
+    }
+
+.row-actions .sep {
+    color: var(--line);
+    margin: 0 0.4rem;
+}
+
+/* ---------- Status (luz-piloto) ---------- */
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.88rem;
+    white-space: nowrap;
+}
+
+    .status .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+
+.status-pendente .dot {
+    background: var(--slate-signal);
+}
+
+.status-andamento .dot {
+    background: var(--amber);
+}
+
+.status-concluida .dot {
+    background: var(--green);
+}
+
+.status-cancelada .dot {
+    background: var(--red);
+}
+
+/* ---------- Employee tag ---------- */
+.id-tag {
+    width: 34px;
+    height: 34px;
+    background: var(--ink);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    margin-right: 0.65rem;
+    flex-shrink: 0;
+}
+
+.person-cell {
+    display: flex;
+    align-items: center;
+}
+
+/* ---------- Forms ---------- */
+.field {
+    margin-bottom: 1.15rem;
+    max-width: 420px;
+}
+
+    .field label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--steel);
+        margin-bottom: 0.35rem;
+    }
+
+    .field .form-control,
+    .field select.form-control {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-field);
+        padding: 0.55rem 0.75rem;
+        font-family: 'IBM Plex Sans', sans-serif;
+        width: 100%;
+        background: #fff;
+        color: var(--ink);
+    }
+
+        .field .form-control:focus,
+        .field select.form-control:focus {
+            border-color: var(--amber);
+            box-shadow: 0 0 0 3px rgba(232, 163, 61, 0.3);
+            outline: none;
+        }
+
+    .field .text-danger {
+        display: block;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+    }
+
+.validation-summary-errors {
+    border-left: 4px solid var(--red);
+    background: rgba(192, 57, 43, 0.06);
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.25rem;
+    border-radius: 4px;
+}
+
+    .validation-summary-errors ul {
+        margin: 0;
+        padding-left: 1.1rem;
+    }
+
+/* ---------- Record detail ---------- */
+.record dt {
+    color: var(--steel);
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 0.15rem;
+}
+
+.record dd {
+    font-weight: 500;
+    margin-bottom: 1.1rem;
+    font-size: 1rem;
+    color: var(--ink);
+}
+
+.confirm-banner {
+    border: 1px solid rgba(192, 57, 43, 0.35);
+    background: rgba(192, 57, 43, 0.06);
+    border-left: 4px solid var(--red);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #7A2318;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+/* ---------- Sequence timeline (datas da tarefa) ---------- */
+.timeline {
+    display: flex;
+    gap: 0;
+    margin: 0.5rem 0 2rem;
+    flex-wrap: wrap;
+}
+
+    .timeline .step {
+        flex: 1;
+        min-width: 130px;
+        position: relative;
+        padding-top: 1.4rem;
+    }
+
+        .timeline .step::before {
+            content: "";
+            position: absolute;
+            top: 0.35rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--line);
+        }
+
+        .timeline .step:first-child::before {
+            left: 6px;
+            width: calc(100% - 6px);
+        }
+
+        .timeline .step .node {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--slate-signal);
+            border: 2px solid var(--paper);
+        }
+
+        .timeline .step.done .node {
+            background: var(--green);
+        }
+
+        .timeline .step.cancelled .node {
+            background: var(--red);
+        }
+
+    .timeline .step-label {
+        font-size: 0.74rem;
+        color: var(--steel);
+        font-weight: 600;
+        margin-bottom: 0.15rem;
+    }
+
+    .timeline .step-value {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--ink);
+    }
+
+/* ---------- Home: quadro de despacho ---------- */
+.board {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 6px;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+    .board .live {
+        position: absolute;
+        top: 1rem;
+        right: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .board .pulse {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--amber);
+        animation: pulse 2s infinite;
+    }
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(232, 163, 61, 0.5);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(232, 163, 61, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(232, 163, 61, 0);
+    }
+}
+
+.board .readout {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.board .caption {
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.tile {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    border-radius: 4px;
+    border-top: 3px solid var(--ink);
+    transition: border-color 0.15s ease;
+    display: block;
+}
+
+    .tile:hover {
+        border-top-color: var(--amber);
+        color: var(--ink);
+    }
+
+    .tile .tile-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 1.05rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .tile .tile-desc {
+        color: var(--steel);
+        font-size: 0.85rem;
+    }
+
+/* ---------- Footer ---------- */
+.app-footer {
+    border-top: 1px solid var(--line);
+    color: var(--steel-light);
+    font-size: 0.85rem;
+    padding: 1.5rem 0;
+    text-align: center;
+    background: var(--panel);
+    margin-top: 3rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .board .pulse {
+        animation: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-head-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .table-ledger {
+        display: block;
+        overflow-x: auto;
+    }
 }

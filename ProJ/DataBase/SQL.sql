@@ -1,3 +1,5 @@
+CREATE DATABASE [dbProJ]
+GO
 USE [dbProJ]
 GO
  Object  Table [dbo].[CentralDeCusto]    Script Date 04092026 163851 

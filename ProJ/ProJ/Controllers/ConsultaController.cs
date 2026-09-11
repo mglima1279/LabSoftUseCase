@@ -74,6 +74,9 @@ namespace ProJ.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Codigo,DataHora,StatusConsulta,PacienteId,MedicoId")] Consulta consultum)
         {
+            var pacienteId = HttpContext.Session.GetInt32("PacienteId");
+
+            consultum.PacienteId = pacienteId ?? -1;
             if (ModelState.IsValid)
             {
                 _context.Add(consultum);

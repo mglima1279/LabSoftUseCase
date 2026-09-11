@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,13 +12,13 @@ public partial class Consulta
 
     public DateTime DataHora { get; set; }
 
-    public string StatusConsulta { get; set; } = null!;
+    public string StatusConsulta { get; set; } = "Agendada";
 
     public int PacienteId { get; set; }
 
     public int MedicoId { get; set; }
 
-    public virtual Medico Medico { get; set; } = null!;
+    public virtual Medico? Medico { get; set; }
 
-    public virtual Paciente Paciente { get; set; } = null!;
+    public virtual Paciente? Paciente { get; set; }
 }

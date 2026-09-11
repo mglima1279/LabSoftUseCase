@@ -1,20 +1,34 @@
-/* ==========================================================================
-   1. VARI¡VEIS E CONFIGURA«’ES GERAIS
-   ========================================================================== */
+Ôªø/* =========================================================
+   VIDA & SA√öDE ‚Äî SISTEMA DE CL√çNICA
+   ASP.NET Core MVC
+   ========================================================= */
+
 :root {
     --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --secondary: #64748b;
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --border-color: #e2e8f0;
-    --danger: #ef4444;
-    --success: #10b981;
-    --radius: 8px;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --secondary: #0f766e;
+    --secondary-light: #ecfdf5;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --surface-hover: #f8fafc;
+    --text: #172033;
+    --text-light: #64748b;
+    --text-muted: #94a3b8;
+    --border: #e2e8f0;
+    --radius: 14px;
+    --radius-small: 9px;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    --shadow-hover: 0 15px 35px rgba(15, 23, 42, 0.10);
 }
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -22,82 +36,19 @@
     padding: 0;
 }
 
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-main);
+    min-height: 100vh;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     line-height: 1.6;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-}
-
-/* ==========================================================================
-   2. LAYOUT PRINCIPAL (Navbar, Container, Footer)
-   ========================================================================== */
-.navbar {
-    background-color: var(--card-bg);
-    border-bottom: 1px solid var(--border-color);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.navbar-brand {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--primary);
-    text-decoration: none;
-}
-
-.navbar-nav {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-}
-
-.nav-link {
-    color: var(--text-main);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-    .nav-link:hover {
-        color: var(--primary);
-    }
-
-.container {
-    width: 100%;
-    max-width: 1100px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    flex: 1; /* Garante que o footer fique no rodapÈ */
-}
-
-footer {
-    background-color: var(--card-bg);
-    border-top: 1px solid var(--border-color);
-    text-align: center;
-    padding: 1.5rem;
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    margin-top: auto;
-}
-
-/* ==========================================================================
-   3. TIPOGRAFIA & ELEMENTOS
-   ========================================================================== */
-h1, h2, h3 {
-    margin-bottom: 1rem;
-    color: var(--text-main);
-    font-weight: 600;
-}
-
-p {
-    margin-bottom: 1rem;
 }
 
 a {
@@ -106,45 +57,497 @@ a {
 }
 
     a:hover {
-        text-decoration: underline;
+        color: var(--primary-dark);
     }
 
-/* ==========================================================================
-   4. FORMUL¡RIOS & VALIDA«√O (ASP.NET MVC)
-   ========================================================================== */
-.form-group {
-    margin-bottom: 1.25rem;
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+    min-height: 72px;
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
 }
 
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary);
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+    .navbar-brand::before {
+        content: "‚úö";
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        color: white;
+        background: linear-gradient( 135deg, var(--primary), var(--secondary) );
+        font-size: 18px;
+    }
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 14px;
+    border-radius: var(--radius-small);
+    color: var(--text-light);
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+    .nav-link:hover {
+        color: var(--primary);
+        background: var(--primary-light);
+        text-decoration: none;
+    }
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 35px 0;
+    flex: 1;
+}
+
+
+/* =========================================================
+   T√çTULOS
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--text);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 750;
+}
+
+h3 {
+    font-size: 1.15rem;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+    .page-header p {
+        margin-top: 6px;
+        color: var(--text-light);
+    }
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .card:hover {
+        box-shadow: var(--shadow-hover);
+    }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.dashboard-header {
+    margin-bottom: 28px;
+}
+
+    .dashboard-header h1 {
+        margin-bottom: 5px;
+    }
+
+    .dashboard-header p {
+        color: var(--text-light);
+    }
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.stat-card.success .stat-icon {
+    color: var(--success);
+    background: #f0fdf4;
+}
+
+.stat-card.warning .stat-icon {
+    color: var(--warning);
+    background: #fffbeb;
+}
+
+.stat-card.danger .stat-icon {
+    color: var(--danger);
+    background: #fef2f2;
+}
+
+.stat-label {
+    color: var(--text-light);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    color: var(--text);
+    font-size: 1.65rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   FORMUL√ÅRIOS
+   ========================================================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label,
 label {
     display: block;
-    font-weight: 500;
-    margin-bottom: 0.35rem;
-    color: var(--text-main);
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 650;
+    margin-bottom: 7px;
 }
 
-.form-control {
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="password"],
+select,
+textarea {
     width: 100%;
-    padding: 0.625rem 0.875rem;
-    font-size: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    background-color: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: 44px;
+    padding: 10px 13px;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    font: inherit;
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-    .form-control:focus {
-        outline: none;
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+    .form-control:focus,
+    input:focus,
+    select:focus,
+    textarea:focus {
         border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
     }
 
-/* Estilos nativos para validaÁ„o do ASP.NET Core */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+    .form-grid .full {
+        grid-column: 1 / -1;
+    }
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+
+/* =========================================================
+   BOT√ïES
+   ========================================================= */
+
+.btn {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 17px;
+    border: 0;
+    border-radius: var(--radius-small);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+    .btn:hover {
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .btn:active {
+        transform: translateY(0);
+    }
+
+.btn-primary {
+    color: white;
+    background: var(--primary);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+}
+
+    .btn-primary:hover {
+        color: white;
+        background: var(--primary-dark);
+    }
+
+.btn-secondary {
+    color: var(--text);
+    background: #f1f5f9;
+}
+
+    .btn-secondary:hover {
+        background: #e2e8f0;
+    }
+
+.btn-success {
+    color: white;
+    background: var(--success);
+}
+
+.btn-danger {
+    color: white;
+    background: var(--danger);
+}
+
+.btn-sm {
+    min-height: 34px;
+    padding: 6px 11px;
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   TABELAS
+   ========================================================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+    .table th,
+    .table td {
+        padding: 15px 17px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+    }
+
+    .table th {
+        background: #f8fafc;
+        color: var(--text-light);
+        font-size: 0.76rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .table td {
+        color: var(--text);
+        font-size: 0.9rem;
+    }
+
+    .table tbody tr {
+        transition: background 0.15s ease;
+    }
+
+        .table tbody tr:hover {
+            background: var(--surface-hover);
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+.table-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 750;
+}
+
+.badge-success {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.badge-warning {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.badge-danger {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.badge-info {
+    color: #1e40af;
+    background: #dbeafe;
+}
+
+
+/* =========================================================
+   ALERTAS / VALIDA√á√ÉO
+   ========================================================= */
+
+.alert {
+    padding: 14px 17px;
+    border-radius: var(--radius-small);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    color: #166534;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.alert-danger,
+.validation-summary-errors {
+    color: #991b1b;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
 .field-validation-error {
-    color: var(--danger);
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
     display: block;
+    color: var(--danger);
+    font-size: 0.78rem;
+    margin-top: 5px;
 }
 
 .input-validation-error {
@@ -152,84 +555,318 @@ label {
 }
 
 .validation-summary-errors {
-    background-color: #fef2f2;
-    border: 1px solid #fecaca;
-    color: var(--danger);
-    padding: 1rem;
-    border-radius: var(--radius);
-    margin-bottom: 1.5rem;
+    padding: 15px 18px;
+    margin-bottom: 20px;
 }
 
     .validation-summary-errors ul {
-        list-style-position: inside;
+        padding-left: 20px;
     }
 
-/* ==========================================================================
-   5. BOT’ES
-   ========================================================================== */
-.btn {
-    display: inline-block;
-    padding: 0.625rem 1.25rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-    text-align: center;
-    text-decoration: none;
+
+/* =========================================================
+   DETALHES
+   ========================================================= */
+
+.details-card {
+    max-width: 760px;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    padding: 26px;
+    box-shadow: var(--shadow);
 }
 
-    .btn:active {
-        transform: scale(0.98);
+.details-list {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-top: 1px solid var(--border);
+}
+
+    .details-list dt,
+    .details-list dd {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
     }
 
-.btn-primary {
-    background-color: var(--primary);
-    color: #fff;
+    .details-list dt {
+        color: var(--text-light);
+        font-size: 0.84rem;
+        font-weight: 700;
+    }
+
+    .details-list dd {
+        color: var(--text);
+        font-weight: 500;
+    }
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
 }
 
-    .btn-primary:hover {
-        background-color: var(--primary-hover);
+.empty-state-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.empty-state h3 {
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    color: var(--text-light);
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    padding: 22px;
+    color: var(--text-light);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   HOME / HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 65px 50px;
+    border-radius: 22px;
+    color: white;
+    background: linear-gradient( 135deg, #1d4ed8, #0f766e );
+    box-shadow: 0 20px 45px rgba(37, 99, 235, 0.20);
+    margin-bottom: 28px;
+}
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        right: -100px;
+        top: -100px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+        position: relative;
+        z-index: 1;
+        color: white;
+        max-width: 650px;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+    }
+
+    .hero p {
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 1.05rem;
+        margin-bottom: 25px;
+    }
+
+
+/* =========================================================
+   GRID DE A√á√ïES
+   ========================================================= */
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.action-card {
+    display: block;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: var(--text);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+}
+
+    .action-card:hover {
+        color: var(--text);
+        transform: translateY(-3px);
+        border-color: #bfdbfe;
+        box-shadow: var(--shadow-hover);
         text-decoration: none;
     }
 
-.btn-secondary {
-    background-color: var(--secondary);
-    color: #fff;
+.action-card-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    color: var(--primary);
+    background: var(--primary-light);
+    font-size: 1.25rem;
 }
 
-.btn-danger {
-    background-color: var(--danger);
-    color: #fff;
+.action-card h3 {
+    margin-bottom: 6px;
 }
 
-/* ==========================================================================
-   6. TABELAS (CRUD Views)
-   ========================================================================== */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--card-bg);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    margin: 1.5rem 0;
+.action-card p {
+    color: var(--text-light);
+    font-size: 0.88rem;
+    margin: 0;
 }
 
-    .table th,
-    .table td {
-        padding: 0.875rem 1rem;
-        text-align: left;
-        border-bottom: 1px solid var(--border-color);
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 30px;
+    background: radial-gradient( circle at top left, #dbeafe, transparent 35% ), var(--bg);
+}
+
+.login-card {
+    width: min(430px, 100%);
+    padding: 35px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.10);
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.login-logo-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 14px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    color: white;
+    background: linear-gradient( 135deg, var(--primary), var(--secondary) );
+    font-size: 28px;
+}
+
+.login-logo h1 {
+    font-size: 1.55rem;
+}
+
+.login-logo p {
+    color: var(--text-light);
+    font-size: 0.88rem;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .table th {
-        background-color: #f1f5f9;
-        font-weight: 600;
-        color: var(--text-main);
+    .action-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .table tr:hover {
-        background-color: #f8fafc;
+    .navbar {
+        padding: 0 20px;
     }
+}
+
+@media (max-width: 650px) {
+
+    .container {
+        width: min(100% - 24px, 1180px);
+        padding: 24px 0;
+    }
+
+    .navbar {
+        min-height: auto;
+        padding: 15px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .navbar-nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dashboard-grid,
+    .action-grid,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+        .form-grid .full {
+            grid-column: auto;
+        }
+
+    .hero {
+        padding: 40px 25px;
+    }
+
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+    .details-list {
+        grid-template-columns: 1fr;
+    }
+
+        .details-list dt {
+            border-bottom: 0;
+            padding-bottom: 3px;
+        }
+
+        .details-list dd {
+            padding-top: 3px;
+        }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+        .form-actions .btn {
+            width: 100%;
+        }
+}
